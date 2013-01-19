@@ -54,7 +54,24 @@ public:
 	inline Json& operator [](const std::string& key);
 	inline const Json& operator [](const std::string& key) const;
 
-	inline Json& operator =(const Json& json);
+	inline Json& operator=(const Json& json);
+	inline Json& operator=(const char* value);
+	inline Json& operator=(const std::string& value);
+	inline Json& operator=(char value);
+	inline Json& operator=(short value);
+	inline Json& operator=(int value);
+	inline Json& operator=(long value);
+	inline Json& operator=(long long value);
+	inline Json& operator=(unsigned char value);
+	inline Json& operator=(unsigned short value);
+	inline Json& operator=(unsigned int value);
+	inline Json& operator=(unsigned long value);
+	inline Json& operator=(unsigned long long value);
+	inline Json& operator=(float value);
+	inline Json& operator=(double value);
+	inline Json& operator=(long double value);
+	inline Json& operator=(bool value);
+
 	template <class T> T as() const;
 
 protected:
@@ -145,8 +162,8 @@ Json& Json::operator[](unsigned int index)
 		clear();
 		type_ = Json::JTYPE_ARRAY;
 	}
-	if (index >= array_.size())
-		array_.resize(index + 1);
+	while (index >= array_.size())
+		array_.push_back(new Json);
 	return *array_[index];
 }
 
@@ -195,6 +212,172 @@ Json& Json::operator=(const Json& json)
 	return (*this);
 }
 
+Json& Json::operator=(const char* value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	value_ = value;
+	type_ = Json::JTYPE_STRING;
+	return *this;
+}
+
+Json& Json::operator=(const std::string& value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	value_ = value;
+	type_ = Json::JTYPE_STRING;
+	return *this;
+}
+
+Json& Json::operator=(char value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(short value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(int value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(long value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(long long value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(unsigned char value)
+{	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(unsigned short value)
+{	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(unsigned int value)
+{	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(unsigned long value)
+{	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(unsigned long long value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(float value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(double value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(long double value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	std::stringstream ss;
+	ss << value;
+	value_ = ss.str();
+	type_ = Json::JTYPE_NUMBER;
+	return *this;
+}
+
+Json& Json::operator=(bool value)
+{
+	if (type_ == Json::JTYPE_ARRAY || type_ == Json::JTYPE_OBJECT)
+		clear();
+	value_ = value ? "true" : "false";
+	type_ = Json::JTYPE_BOOLEAN;
+	return *this;
+}
+
 template <class T> T Json::as() const
 {
 	if (type_ != Json::JTYPE_STRING && type_ != Json::JTYPE_BOOLEAN && type_ != Json::JTYPE_NUMBER)
@@ -206,4 +389,4 @@ template <class T> T Json::as() const
 	return r;
 }
 
-#endif // JSON_H
+#endif // Json_H

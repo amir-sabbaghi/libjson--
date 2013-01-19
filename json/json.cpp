@@ -260,11 +260,15 @@ void Json::rec_write(ostream& f, int tab) const
 		f << ']';
 		break;
 	}
-	case Json::JTYPE_NULL:
 	case Json::JTYPE_STRING:
+		f << '"' << value_ << '"';
+		break;
 	case Json::JTYPE_NUMBER:
 	case Json::JTYPE_BOOLEAN:
-		f << '"' << value_ << '"';
+		f << value_;
+		break;
+	case Json::JTYPE_NULL:
+		f << "null";
 		break;
 	default:
 		break;
