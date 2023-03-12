@@ -378,15 +378,24 @@ Json& Json::operator=(bool value)
 	return *this;
 }
 
+
+template <> std::string Json::as() const
+{
+	if (type_ != Json::JTYPE_STRING) 
+		throw "Cannot convert object or array types"; // FIXME: should throw an appropriate exception
+	std::stringstream ss;
+	ss << value_;
+	return ss.str() ;
+}
+
 template <class T> T Json::as() const
 {
-	if (type_ != Json::JTYPE_STRING && type_ != Json::JTYPE_BOOLEAN && type_ != Json::JTYPE_NUMBER)
+	if (type_ != Json::JTYPE_BOOLEAN && type_ != Json::JTYPE_NUMBER)
 		throw "Cannot convert object or array types"; // FIXME: should throw an appropriate exception
 	std::stringstream ss;
 	ss << value_;
 	T r;
-	ss >> r;
+    ss >> r;
 	return r;
 }
-
 #endif // Json_H
