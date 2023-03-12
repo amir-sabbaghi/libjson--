@@ -1,7 +1,6 @@
 #ifndef JSON_H
 #define JSON_H
 
-#include <iostream>
 #include <string>
 #include <map>
 #include <vector>
@@ -382,7 +381,6 @@ Json& Json::operator=(bool value)
 
 template <> std::string Json::as() const
 {
-    std::cerr << "qua" << std::endl ;
 	if (type_ != Json::JTYPE_STRING) 
 		throw "Cannot convert object or array types"; // FIXME: should throw an appropriate exception
 	std::stringstream ss;
@@ -392,7 +390,6 @@ template <> std::string Json::as() const
 
 template <class T> T Json::as() const
 {
-    std::cerr << "qui" << std::endl ;
 	if (type_ != Json::JTYPE_BOOLEAN && type_ != Json::JTYPE_NUMBER)
 		throw "Cannot convert object or array types"; // FIXME: should throw an appropriate exception
 	std::stringstream ss;
