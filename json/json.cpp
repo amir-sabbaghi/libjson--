@@ -275,9 +275,3 @@ void Json::rec_write(ostream& f, int tab) const
 	}
 }
 
-template <> std::string Json::as<std::string>() const
-{
-	if (type_ != Json::JTYPE_STRING && type_ != Json::JTYPE_BOOLEAN && type_ != Json::JTYPE_NUMBER)
-		throw "Cannot convert object or array types"; // FIXME: should throw an appropriate exception
-	return value_;
-}
